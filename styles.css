@@ -8,6 +8,8 @@ html {
 
 body {
   margin: 0;
+  font-size: 14px;
+  color: white;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -21,6 +23,8 @@ body {
 }
 
 .nowContainer {
+  display: flex;
+  flex-direction: column;
   background-color: rgba(0, 0, 0, 0.3);
   width: 300px;
   height: 350px;
@@ -43,7 +47,17 @@ body {
 /* ELEMENTS */
 .boxTitle {
   /* background-color: chartreuse; */
-  font-size: 0.9em;
-  color: white;
   margin: 10px 10px 0 10px;
+}
+
+.temperatureMain {
+  font-size: 5em;
+  font-weight: 700;
+  margin: 0.25em auto 0 auto;
+}
+
+.symbolMain {
+  /* background-color: chartreuse; */
+  width: 45%;
+  margin: 0 auto;
 }
