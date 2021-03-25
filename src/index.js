@@ -1,8 +1,9 @@
-console.log("Test");
+import apiKey from "./api-key";
+
 const location = "london";
 
 fetch(
-  `http://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=d096eb4766151c74dfd165b926c9914b&units=metric`,
+  `http://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${apiKey()}&units=metric`,
   { mode: "cors" }
 )
   .then(function (response) {
