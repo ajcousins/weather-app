@@ -4,6 +4,8 @@ function iconKey(weatherCode, pod) {
       return "0-mn";
     case weatherCode === 800:
       return "0-sn";
+    case weatherCode === 801 && pod === "n":
+      return "1-clw";
     case weatherCode === 801:
       return "1-cls";
     case weatherCode === 802:
@@ -21,9 +23,14 @@ function iconKey(weatherCode, pod) {
     case weatherCode >= 520 && weatherCode <= 522:
     case weatherCode === 531:
       return "2-clrr";
+    case weatherCode === 500 && pod === "n":
+    case weatherCode === 501 && pod === "n":
+      return "2-clr";
     case weatherCode === 500:
     case weatherCode === 501:
       return "2-clrs";
+    case weatherCode >= 502 && weatherCode <= 504 && pod === "n":
+      return "2-clrr";
     case weatherCode >= 502 && weatherCode <= 504:
       return "2-clrrs";
     case weatherCode >= 200 && weatherCode <= 232:
