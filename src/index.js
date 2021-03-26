@@ -3,6 +3,10 @@ import iconKey from "./icon-key";
 import domItems from "./dom-items";
 import weatherDescription from "./weather-description";
 import colourHex from "./colourHex";
+import getBarHeights from "./get-bar-heights";
+import formatDate from "./format-date";
+import windDir from "./wind-dir";
+import getBackgroundCode from "./get-background-code";
 
 const searchBar = {
   initialise() {
@@ -61,24 +65,33 @@ const weather = {
     for (let i = 0; i < obj.list.length; i++) {
       // Get data for right now + next 5 days.
       if (obj.list[i].dt_txt.split(" ")[1] === "12:00:00" || i === 0) {
-        const day = new DayData(
-          obj.city.name,
-          obj.list[i].dt_txt.split(" ")[1],
-          obj.list[i].dt_txt.split(" ")[0],
-          obj.list[i].main.temp,
-          obj.list[i].weather[0].id,
-          obj.list[i].pop,
-          obj.list[i].main.humidity,
-          obj.list[i].wind.speed,
-          obj.list[i].wind.deg,
-          obj.list[i].sys.pod,
-          obj.list[i].weather[0].description
-        );
-        this.daysArray.push(day);
+        this.daysArray.push(this.makeNewDayObj(i, obj));
       }
     }
+    // If there aren't enough days at 12:00.. use the last day from the set.
+    if (this.daysArray.length === 5) {
+      this.daysArray.push(this.makeNewDayObj(obj.list.length - 1, obj));
+    }
     console.log(this.daysArray);
-    displayWeather();
+    displayCurrentWeather();
+    displayForecast();
+    setBackground();
+  },
+  makeNewDayObj(i, obj) {
+    const day = new DayData(
+      obj.city.name,
+      obj.list[i].dt_txt.split(" ")[1],
+      obj.list[i].dt_txt.split(" ")[0],
+      obj.list[i].main.temp,
+      obj.list[i].weather[0].id,
+      obj.list[i].pop,
+      obj.list[i].main.humidity,
+      obj.list[i].wind.speed,
+      obj.list[i].wind.deg,
+      obj.list[i].sys.pod,
+      obj.list[i].weather[0].description
+    );
+    return day;
   },
   clearData() {
     this.daysArray = [];
@@ -113,11 +126,9 @@ class DayData {
   }
 }
 
-function displayWeather() {
+function displayCurrentWeather() {
   let currentTemperature = weather.daysArray[0].temperature;
-  domItems().temperatureMain.textContent = `${Math.round(
-    currentTemperature
-  )}ºC`;
+  domItems().temperatureMain.textContent = `${Math.round(currentTemperature)}º`;
 
   let currentSymbol = iconKey(
     weather.daysArray[0].weatherCode,
@@ -133,4 +144,95 @@ function displayWeather() {
 
   // console.log(domItems());
   domItems().nowTitle.textContent = `Current weather for ${weather.daysArray[0].location}...`;
+}
+
+function displayForecast() {
+  for (let i = 0; i < 5; i++) {
+    let currentSymbol = iconKey(
+      weather.daysArray[i + 1].weatherCode,
+      weather.daysArray[i + 1].dayNight
+    );
+    domItems().symbolCard[i].src = `symbols/${currentSymbol}.svg`;
+    setBarHeights();
+    domItems().date[i].textContent = formatDate(weather.daysArray[i + 1].date);
+    let windCode = windDir(weather.daysArray[i + 1].windDeg);
+    domItems().windDir[i].src = `wind/${windCode}.svg`;
+    domItems().windVal[i].textContent = Math.round(
+      weather.daysArray[i + 1].windSpeed * 2.237
+    );
+    domItems().rainVal[i].textContent = `${Math.round(
+      weather.daysArray[i + 1].probOfPrecip * 100
+    )}%`;
+  }
+}
+
+function setBarHeights() {
+  let heights = getBarHeights(weather);
+
+  for (let i = 0; i < 5; i++) {
+    domItems().bars[i].setAttribute("style", `height: 80px`);
+    domItems().colourZone[i].setAttribute(
+      "style",
+      `background-color: rgba(255, 255, 255, 0.3)`
+    );
+  }
+  setTimeout(() => {
+    for (let i = 0; i < 5; i++) {
+      let delay = 100;
+      setTimeout(() => {
+        domItems().bars[i].setAttribute("style", `height: ${heights[i]}px`);
+        domItems().tempZone[i].textContent = `${Math.round(
+          weather.daysArray[i + 1].temperature
+        )}º`;
+        let tempHex = colourHex(
+          Math.round(weather.daysArray[i + 1].temperature)
+        );
+        domItems().colourZone[i].setAttribute(
+          "style",
+          `background-color: #${tempHex}`
+        );
+      }, delay * (i + 1));
+    }
+  }, 500);
+}
+
+function setBackground() {
+  // console.log(domItems().background);
+  console.log(
+    "background:",
+    getBackgroundCode(
+      weather.daysArray[0].weatherCode,
+      weather.daysArray[0].dayNight
+    )
+  );
+  let code = getBackgroundCode(
+    weather.daysArray[0].weatherCode,
+    weather.daysArray[0].dayNight
+  );
+  // domItems().background.setAttribute(
+  //   "style",
+  //   `background: url(/dist/imgs/${code}.jpg) no-repeat center center fixed`,
+  //   "-webkit-background-size: cover",
+  //   "-moz-background-size: cover",
+  //   "-o-background-size: cover",
+  //   "background-size: cover"
+  // );
+  // domItems().background.setAttribute("style", "background-size: cover");
+  if (weather.daysArray[0].dayNight === "n") {
+    domItems().background.classList.add("night");
+    document.querySelector(".nowContainer").classList.add("lightContainer");
+    document
+      .querySelector(".forecastContainer")
+      .classList.add("lightContainer");
+    document.querySelector(".searchContainer").classList.add("lightContainer");
+  } else {
+    domItems().background.classList.remove("night");
+    document.querySelector(".nowContainer").classList.remove("lightContainer");
+    document
+      .querySelector(".forecastContainer")
+      .classList.remove("lightContainer");
+    document
+      .querySelector(".searchContainer")
+      .classList.remove("lightContainer");
+  }
 }

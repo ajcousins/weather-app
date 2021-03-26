@@ -8,8 +8,8 @@ function weatherdescription(dayObj) {
     )} and ${windDescriptive(dayObj.windSpeed)}.`
   );
 
-  textArr.push(`Chance of rain: ${Math.round(dayObj.probOfPrecip * 100)}%.`);
-  textArr.push(`Humidity: ${Math.round(dayObj.humidity)}%.`);
+  textArr.push(`Chance of rain: ${Math.round(dayObj.probOfPrecip * 100)}%`);
+  textArr.push(`Humidity: ${Math.round(dayObj.humidity)}%`);
 
   textParagraph = textArr[0] + "\r\n" + textArr[1] + "\r\n" + textArr[2];
 
