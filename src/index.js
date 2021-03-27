@@ -7,10 +7,10 @@ import getBarHeights from "./get-bar-heights";
 import formatDate from "./format-date";
 import windDir from "./wind-dir";
 import getBackgroundCode from "./get-background-code";
+import calculateNoon from "./calculate-noon";
 
 const searchBar = {
   initialise() {
-    console.log(domItems().searchInput);
     domItems().searchSymbol.addEventListener("click", () => {
       this.search();
     });
@@ -48,7 +48,6 @@ function fetchData(location) {
       weather.handleData(response);
     })
     .catch(function (error) {
-      console.log("Error");
       domItems().searchInput.setAttribute(
         "placeholder",
         "Not a valid locaton."
@@ -61,10 +60,10 @@ fetchData();
 const weather = {
   daysArray: [],
   handleData(obj) {
-    console.log(obj);
+    // console.log(obj);
     for (let i = 0; i < obj.list.length; i++) {
-      // Get data for right now + next 5 days.
-      if (obj.list[i].dt_txt.split(" ")[1] === "12:00:00" || i === 0) {
+      // Get data for right now + next 5 days at noon.
+      if (calculateNoon(obj)[i] === 12 || i === 0) {
         this.daysArray.push(this.makeNewDayObj(i, obj));
       }
     }
@@ -72,7 +71,7 @@ const weather = {
     if (this.daysArray.length === 5) {
       this.daysArray.push(this.makeNewDayObj(obj.list.length - 1, obj));
     }
-    console.log(this.daysArray);
+    // console.log(this.daysArray);
     displayCurrentWeather();
     displayForecast();
     setBackground();
@@ -142,17 +141,11 @@ function displayCurrentWeather() {
   let tempHex = colourHex(Math.round(weather.daysArray[0].temperature));
   domItems().nowTempBar.setAttribute("style", `background-color: #${tempHex}`);
 
-  // console.log(domItems());
   domItems().nowTitle.textContent = `Current weather for ${weather.daysArray[0].location}...`;
 }
 
 function displayForecast() {
   for (let i = 0; i < 5; i++) {
-    let currentSymbol = iconKey(
-      weather.daysArray[i + 1].weatherCode,
-      weather.daysArray[i + 1].dayNight
-    );
-    domItems().symbolCard[i].src = `symbols/${currentSymbol}.svg`;
     setBarHeights();
     domItems().date[i].textContent = formatDate(weather.daysArray[i + 1].date);
     let windCode = windDir(weather.daysArray[i + 1].windDeg);
@@ -170,6 +163,7 @@ function setBarHeights() {
   let heights = getBarHeights(weather);
 
   for (let i = 0; i < 5; i++) {
+    domItems().symbolCard[i].src = "symbols/00-dot.svg";
     domItems().bars[i].setAttribute("style", `height: 80px`);
     domItems().colourZone[i].setAttribute(
       "style",
@@ -180,6 +174,11 @@ function setBarHeights() {
     for (let i = 0; i < 5; i++) {
       let delay = 100;
       setTimeout(() => {
+        let currentSymbol = iconKey(
+          weather.daysArray[i + 1].weatherCode,
+          weather.daysArray[i + 1].dayNight
+        );
+        domItems().symbolCard[i].src = `symbols/${currentSymbol}.svg`;
         domItems().bars[i].setAttribute("style", `height: ${heights[i]}px`);
         domItems().tempZone[i].textContent = `${Math.round(
           weather.daysArray[i + 1].temperature
@@ -197,42 +196,17 @@ function setBarHeights() {
 }
 
 function setBackground() {
-  // console.log(domItems().background);
-  console.log(
-    "background:",
-    getBackgroundCode(
-      weather.daysArray[0].weatherCode,
-      weather.daysArray[0].dayNight
-    )
-  );
   let code = getBackgroundCode(
     weather.daysArray[0].weatherCode,
     weather.daysArray[0].dayNight
   );
-  // domItems().background.setAttribute(
-  //   "style",
-  //   `background: url(/dist/imgs/${code}.jpg) no-repeat center center fixed`,
-  //   "-webkit-background-size: cover",
-  //   "-moz-background-size: cover",
-  //   "-o-background-size: cover",
-  //   "background-size: cover"
-  // );
-  // domItems().background.setAttribute("style", "background-size: cover");
-  if (weather.daysArray[0].dayNight === "n") {
-    domItems().background.classList.add("night");
-    document.querySelector(".nowContainer").classList.add("lightContainer");
-    document
-      .querySelector(".forecastContainer")
-      .classList.add("lightContainer");
-    document.querySelector(".searchContainer").classList.add("lightContainer");
-  } else {
-    domItems().background.classList.remove("night");
-    document.querySelector(".nowContainer").classList.remove("lightContainer");
-    document
-      .querySelector(".forecastContainer")
-      .classList.remove("lightContainer");
-    document
-      .querySelector(".searchContainer")
-      .classList.remove("lightContainer");
+
+  domItems().backgroundMain.className = "";
+  domItems().backgroundMain.classList.add(`${code}`);
+
+  for (let i = 0; i < domItems().containers.length; i++) {
+    if (code === "night")
+      domItems().containers[i].classList.add("lightContainer");
+    else domItems().containers[i].classList.remove("lightContainer");
   }
 }

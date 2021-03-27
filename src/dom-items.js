@@ -20,6 +20,10 @@ function domItems() {
   const rainVal = document.querySelectorAll(".rainVal");
   const date = document.querySelectorAll(".date");
 
+  // Backgrounds
+  const backgroundMain = document.querySelector("html");
+  const containers = document.querySelectorAll(".screen");
+
   return {
     background,
     nowTitle,
@@ -38,6 +42,8 @@ function domItems() {
     windVal,
     rainVal,
     date,
+    backgroundMain,
+    containers,
   };
 }
 export default domItems;
