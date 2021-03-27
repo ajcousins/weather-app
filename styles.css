@@ -1,3 +1,7 @@
+html {
+  transition: background 1s ease-in-out;
+}
+
 .day {
   background: url(/dist/imgs/01_sun.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -8,6 +12,38 @@
 
 .night {
   background: url(/dist/imgs/00_night.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.thickCloud {
+  background: url(/dist/imgs/02_thick-cloud.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.rain {
+  background: url(/dist/imgs/03_rain.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.halfCloud {
+  background: url(/dist/imgs/04_half-cloud.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.white {
+  background: url(/dist/imgs/05_white.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -36,6 +72,7 @@ body {
   background-color: rgba(0, 0, 0, 0.3);
   width: 300px;
   height: 350px;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .forecastContainer {
@@ -43,6 +80,7 @@ body {
   width: 700px;
   height: 350px;
   margin-left: 10px;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .searchContainer {
@@ -51,6 +89,7 @@ body {
   width: 300px;
   height: 50px;
   margin-top: 10px;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .lightContainer {
@@ -238,7 +277,7 @@ body {
     width: 300px;
     height: 350px; */
     margin: 10px auto 0 auto;
-    width: 95%;
+    width: 90%;
     /* height: 80vh; */
     order: 2;
   }
@@ -249,8 +288,8 @@ body {
     height: 350px;
     margin-left: 10px; */
     height: 400px;
-    margin: 10px auto 0 auto;
-    width: 95%;
+    margin: 10px auto 20px auto;
+    width: 90%;
     order: 3;
   }
 
@@ -270,7 +309,7 @@ body {
     height: 50px;
     margin-top: 10px; */
     margin: 10px auto 0 auto;
-    width: 95%;
+    width: 90%;
     order: 1;
   }
 
