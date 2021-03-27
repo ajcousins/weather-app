@@ -38,7 +38,7 @@ searchBar.initialise();
 function fetchData(location) {
   if (!location) location = "London";
   fetch(
-    `http://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${apiKey()}&units=metric`,
+    `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${apiKey()}&units=metric`,
     { mode: "cors" }
   )
     .then(function (response) {
