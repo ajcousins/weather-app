@@ -1,13 +1,9 @@
 import apiKey from "./api-key";
-import iconKey from "./icon-key";
 import domItems from "./dom-items";
-import weatherDescription from "./weather-description";
-import colourHex from "./colourHex";
-import getBarHeights from "./get-bar-heights";
-import formatDate from "./format-date";
-import windDir from "./wind-dir";
-import getBackgroundCode from "./get-background-code";
 import calculateNoon from "./calculate-noon";
+import setBackground from "./set-background";
+import displayForecast from "./display-forecast";
+import displayCurrentWeather from "./display-current-weather";
 
 const searchBar = {
   initialise() {
@@ -60,7 +56,6 @@ fetchData();
 const weather = {
   daysArray: [],
   handleData(obj) {
-    // console.log(obj);
     for (let i = 0; i < obj.list.length; i++) {
       // Get data for right now + next 5 days at noon.
       if (calculateNoon(obj)[i] === 12 || i === 0) {
@@ -71,7 +66,6 @@ const weather = {
     if (this.daysArray.length === 5) {
       this.daysArray.push(this.makeNewDayObj(obj.list.length - 1, obj));
     }
-    // console.log(this.daysArray);
     displayCurrentWeather();
     displayForecast();
     setBackground();
@@ -96,6 +90,7 @@ const weather = {
     this.daysArray = [];
   },
 };
+export default weather;
 
 class DayData {
   constructor(
@@ -122,91 +117,5 @@ class DayData {
     this.windDeg = windDeg;
     this.dayNight = dayNight;
     this.description = description;
-  }
-}
-
-function displayCurrentWeather() {
-  let currentTemperature = weather.daysArray[0].temperature;
-  domItems().temperatureMain.textContent = `${Math.round(currentTemperature)}º`;
-
-  let currentSymbol = iconKey(
-    weather.daysArray[0].weatherCode,
-    weather.daysArray[0].dayNight
-  );
-  domItems().symbolMain.src = `symbols/${currentSymbol}.svg`;
-
-  let descriptiveText = weatherDescription(weather.daysArray[0]);
-  domItems().nowDescription.textContent = descriptiveText;
-
-  let tempHex = colourHex(Math.round(weather.daysArray[0].temperature));
-  domItems().nowTempBar.setAttribute("style", `background-color: #${tempHex}`);
-
-  domItems().nowTitle.textContent = `Current weather for ${weather.daysArray[0].location}...`;
-}
-
-function displayForecast() {
-  for (let i = 0; i < 5; i++) {
-    setBarHeights();
-    domItems().date[i].textContent = formatDate(weather.daysArray[i + 1].date);
-    let windCode = windDir(weather.daysArray[i + 1].windDeg);
-    domItems().windDir[i].src = `wind/${windCode}.svg`;
-    domItems().windVal[i].textContent = Math.round(
-      weather.daysArray[i + 1].windSpeed * 2.237
-    );
-    domItems().rainVal[i].textContent = `${Math.round(
-      weather.daysArray[i + 1].probOfPrecip * 100
-    )}%`;
-  }
-}
-
-function setBarHeights() {
-  let heights = getBarHeights(weather);
-
-  for (let i = 0; i < 5; i++) {
-    domItems().symbolCard[i].src = "symbols/00-dot.svg";
-    domItems().bars[i].setAttribute("style", `height: 80px`);
-    domItems().colourZone[i].setAttribute(
-      "style",
-      `background-color: rgba(255, 255, 255, 0.3)`
-    );
-  }
-  setTimeout(() => {
-    for (let i = 0; i < 5; i++) {
-      let delay = 100;
-      setTimeout(() => {
-        let currentSymbol = iconKey(
-          weather.daysArray[i + 1].weatherCode,
-          weather.daysArray[i + 1].dayNight
-        );
-        domItems().symbolCard[i].src = `symbols/${currentSymbol}.svg`;
-        domItems().bars[i].setAttribute("style", `height: ${heights[i]}px`);
-        domItems().tempZone[i].textContent = `${Math.round(
-          weather.daysArray[i + 1].temperature
-        )}º`;
-        let tempHex = colourHex(
-          Math.round(weather.daysArray[i + 1].temperature)
-        );
-        domItems().colourZone[i].setAttribute(
-          "style",
-          `background-color: #${tempHex}`
-        );
-      }, delay * (i + 1));
-    }
-  }, 500);
-}
-
-function setBackground() {
-  let code = getBackgroundCode(
-    weather.daysArray[0].weatherCode,
-    weather.daysArray[0].dayNight
-  );
-
-  domItems().backgroundMain.className = "";
-  domItems().backgroundMain.classList.add(`${code}`);
-
-  for (let i = 0; i < domItems().containers.length; i++) {
-    if (code === "night")
-      domItems().containers[i].classList.add("lightContainer");
-    else domItems().containers[i].classList.remove("lightContainer");
   }
 }

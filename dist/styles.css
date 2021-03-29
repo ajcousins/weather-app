@@ -1,3 +1,4 @@
+/**** BACKGROUNDS ****/
 html {
   transition: background 1s ease-in-out;
 }
@@ -57,11 +58,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* LAYOUT */
+/**** LAYOUT ****/
 .mainContainer {
   display: flex;
   flex-wrap: wrap;
-  /* border: 1px solid white; */
   width: 1010px;
   margin: 10% auto 0 auto;
 }
@@ -97,7 +97,6 @@ body {
 }
 
 .forcastInner {
-  /* background-color: burlywood; */
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -106,9 +105,8 @@ body {
   margin: 5px 50px 8px 50px;
 }
 
-/* ELEMENTS */
+/**** ELEMENTS ****/
 .boxTitle {
-  /* background-color: chartreuse; */
   margin: 10px 10px 0 10px;
 }
 
@@ -119,7 +117,6 @@ body {
 }
 
 .symbolMain {
-  /* background-color: chartreuse; */
   width: 45%;
   margin: 0 auto;
 }
@@ -170,9 +167,7 @@ body {
 }
 
 .dayCard {
-  /* background-color: rgba(230, 254, 255, 0.233); */
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   flex-direction: column-reverse;
   align-content: flex-end;
@@ -181,7 +176,6 @@ body {
 }
 
 .date {
-  /* background-color: rgba(255, 127, 80, 0.39); */
   height: 15px;
   text-align: center;
   padding: 5px;
@@ -202,7 +196,6 @@ body {
 .infoZone {
   display: flex;
   position: relative;
-  /* background-color: rgba(255, 214, 80, 0.233); */
   height: 40px;
 }
 
@@ -235,7 +228,6 @@ body {
 .windDir {
   height: 38px;
   width: 38px;
-  /* background-color: coral; */
 }
 .windVal {
   position: absolute;
@@ -245,7 +237,6 @@ body {
   text-align: center;
   width: 20px;
   height: 1.1em;
-  /* background-color: rgb(41, 90, 19); */
 }
 
 .rainSymbol {
@@ -262,31 +253,16 @@ body {
 
 @media only screen and (max-width: 600px) {
   .mainContainer {
-    /* display: flex;
-    flex-wrap: wrap;
-    width: 1010px;
-    margin: 10% auto; */
-    /* background-color: coral; */
     width: 100%;
   }
 
   .nowContainer {
-    /* display: flex;
-    flex-direction: column;
-    background-color: rgba(0, 0, 0, 0.3);
-    width: 300px;
-    height: 350px; */
     margin: 10px auto 0 auto;
     width: 90%;
-    /* height: 80vh; */
     order: 2;
   }
 
   .forecastContainer {
-    /* background-color: rgba(0, 0, 0, 0.3);
-    width: 700px;
-    height: 350px;
-    margin-left: 10px; */
     height: 400px;
     margin: 10px auto 20px auto;
     width: 90%;
@@ -294,68 +270,32 @@ body {
   }
 
   .forcastInner {
-    /* display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    width: auto;
-    height: 82%; */
     margin: 5px 5px 8px 5px;
   }
 
   .searchContainer {
-    /* display: flex;
-    background-color: rgba(0, 0, 0, 0.3);
-    width: 300px;
-    height: 50px;
-    margin-top: 10px; */
     margin: 10px auto 0 auto;
     width: 90%;
     order: 1;
   }
 
   .bar {
-    /* background-color: rgba(255, 255, 255, 0.1);
-    display: flex;
-    position: relative;
-    flex-direction: column-reverse;
-    transition: height 0.5s ease-in-out;
-    overflow: hidden;
-    width: 100%; */
     padding-bottom: 40px;
   }
 
   .tempZone {
-    /* position: absolute;
-    top: 0;
-    height: auto;
-    width: 100%;
-    margin: 5px 0 0 5px;
-    font-weight: 700; */
     margin-bottom: 5px;
   }
 
   .infoZone {
-    /* display: flex;
-    position: relative;
-    height: 40px; */
     bottom: -40px;
     flex-direction: column;
     height: 80px;
-    /* background-color: rgb(224, 115, 75); */
   }
   .windDir {
-    /* height: 38px;
-    width: 38px; */
     margin: 0 auto 0 auto;
   }
   .windVal {
-    /* position: absolute;
-    top: 12px;
-    left: 9px;
-    font-size: 0.75em;
-    text-align: center;
-    width: 20px;
-    height: 1.1em; */
     left: 0;
     right: 0;
     margin-left: auto;
@@ -363,17 +303,11 @@ body {
   }
 
   .rainSymbol {
-    /* height: 80%;
-    margin-left: auto; */
     height: 30%;
     margin: 0;
   }
 
   .rainVal {
-    /* font-size: 0.75em;
-    margin-top: 12px;
-    margin-left: 2px;
-    margin-right: 10px; */
     margin: 0 auto;
   }
 }

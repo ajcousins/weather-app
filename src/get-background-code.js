@@ -1,4 +1,4 @@
-function getBackgroundCode(weatherCode, pod) {
+function getBackgroundCode(weatherCode, pod, probOfPrecip) {
   switch (true) {
     case pod === "n":
       return "night";
@@ -9,6 +9,7 @@ function getBackgroundCode(weatherCode, pod) {
       return "thickCloud";
     case weatherCode >= 300 && weatherCode <= 321:
     case weatherCode >= 502 && weatherCode <= 531:
+    case probOfPrecip > 0.8 && pod === "d":
       return "rain";
     case weatherCode === 500:
     case weatherCode === 501:

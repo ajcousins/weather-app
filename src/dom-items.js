@@ -1,15 +1,19 @@
 function domItems() {
+  // Background elements
   const background = document.querySelector("html");
   const nowTitle = document.querySelector("#nowTitle");
-  // console.log(nowTitle);
+
+  // Current weather pane
   const temperatureMain = document.querySelector(".temperatureMain");
   const symbolMain = document.querySelector(".symbolMain");
   const nowDescription = document.querySelector("#nowText");
   const nowTempBar = document.querySelector(".nowTempBar");
 
+  // Search bar
   const searchInput = document.querySelector(".searchBox");
   const searchSymbol = document.querySelector(".searchSymbol");
 
+  // Forecast pane
   const bars = document.querySelectorAll(".bar");
   const symbolCard = document.querySelectorAll(".symbolCard");
   const colourZone = document.querySelectorAll(".colourZone");
