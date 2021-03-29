@@ -4,7 +4,7 @@ html {
 }
 
 .day {
-  background: url(imgs/01_sun.jpg) no-repeat center center fixed;
+  background: url(./imgs/01_sun.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -12,7 +12,7 @@ html {
 }
 
 .night {
-  background: url(imgs/00_night.jpg) no-repeat center center fixed;
+  background: url(./imgs/00_night.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -20,7 +20,7 @@ html {
 }
 
 .thickCloud {
-  background: url(imgs/02_thick-cloud.jpg) no-repeat center center fixed;
+  background: url(./imgs/02_thick-cloud.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -28,7 +28,7 @@ html {
 }
 
 .rain {
-  background: url(imgs/03_rain.jpg) no-repeat center center fixed;
+  background: url(./imgs/03_rain.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -36,7 +36,7 @@ html {
 }
 
 .halfCloud {
-  background: url(imgs/04_half-cloud.jpg) no-repeat center center fixed;
+  background: url(./imgs/04_half-cloud.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -44,7 +44,7 @@ html {
 }
 
 .white {
-  background: url(imgs/05_white.jpg) no-repeat center center fixed;
+  background: url(./imgs/05_white.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

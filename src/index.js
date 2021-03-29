@@ -1,3 +1,5 @@
+import "./styles.css";
+import "./background-imgs";
 import apiKey from "./api-key";
 import domItems from "./dom-items";
 import calculateNoon from "./calculate-noon";
