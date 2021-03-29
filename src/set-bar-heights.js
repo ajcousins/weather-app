@@ -1,13 +1,12 @@
-import weather from "./index.js";
 import domItems from "./dom-items";
 import colourHex from "./colourHex";
 import getBarHeights from "./get-bar-heights";
 import iconKey from "./icon-key";
 
-function setBarHeights() {
-  let heights = getBarHeights(weather);
+function setBarHeights(weather) {
+  const heights = getBarHeights(weather);
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 5; i += 1) {
     domItems().symbolCard[i].src = "symbols/00-dot.svg";
     domItems().bars[i].setAttribute("style", `height: 80px`);
     domItems().colourZone[i].setAttribute(
@@ -16,10 +15,10 @@ function setBarHeights() {
     );
   }
   setTimeout(() => {
-    for (let i = 0; i < 5; i++) {
-      let delay = 100;
+    for (let i = 0; i < 5; i += 1) {
+      const delay = 100;
       setTimeout(() => {
-        let currentSymbol = iconKey(
+        const currentSymbol = iconKey(
           weather.daysArray[i + 1].weatherCode,
           weather.daysArray[i + 1].dayNight
         );
@@ -28,7 +27,7 @@ function setBarHeights() {
         domItems().tempZone[i].textContent = `${Math.round(
           weather.daysArray[i + 1].temperature
         )}º`;
-        let tempHex = colourHex(
+        const tempHex = colourHex(
           Math.round(weather.daysArray[i + 1].temperature)
         );
         domItems().colourZone[i].setAttribute(
